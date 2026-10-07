@@ -1,0 +1,8 @@
+# Generated Java output
+/out/
+*.class
+
+# Local editor and operating-system files
+/.vscode/
+.DS_Store
+Thumbs.db
