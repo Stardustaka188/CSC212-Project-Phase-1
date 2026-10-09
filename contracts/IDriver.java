@@ -1,6 +1,10 @@
 /**
  * Represents a single driver in the ride-sharing system.
  * Drivers are compared by ID.
+ * Driver: This class extends Person and represents a single driver in the Ride-Sharing
+System. In addition to the inherited Person fields, it should have fields for the driver’s
+vehicle plate and vehicle type. The driver ID is unique and must be provided when the
+driver is created via the constructor. It must not be modified after creation.
  */
 public interface IDriver extends IPerson, Comparable<IDriver> {
 

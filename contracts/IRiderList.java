@@ -1,9 +1,18 @@
+import java.util.LinkedList;
+
 /**
  * Stores all riders in a structure maintained in sorted order by rider ID.
+ * RiderList: This class will represent the linked list data structure used for storing riders’
+records. It should have methods for adding, searching, and removing rider records from
+the list. Rider ID and email are unique, so removing by either one removes at most one
+rider. Name and home city are not unique: removing by name or by home city must
+remove every rider that matches, not just the first one found.
  */
 public interface IRiderList {
 
     // Inserts a rider into the list in sorted order by ID. If a rider with the same ID already exists, insertion fails.
+    
+    
     boolean add(IRider rider);
 
     //Searches for a rider by ID.

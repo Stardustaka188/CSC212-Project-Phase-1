@@ -1,5 +1,10 @@
+import java.util.LinkedList;
+
 /**
  * Stores all rides in a structure maintained in alphabetical order by pickup location.
+ * RideList: This class will represent the linked list data structure used for storing the rides.
+It should have methods for adding, searching, and removing rides from the list.
+
  */
 public interface IRideList {
 

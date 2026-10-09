@@ -1,6 +1,15 @@
+import java.util.LinkedList;
 
 /**
  * The interface of the Ride-Sharing System.
+ * RideSharingSystem: This class will represent the Ride-Sharing System application. It
+coordinates the interaction between RiderList, DriverList, RideList and user-level operations. It manages riders, drivers, and rides and enforces the system rules such as
+uniqueness of rider IDs, driver IDs, and vehicle plate numbers, existence checks before
+scheduling, conflict-free scheduling of rides for both the assigned rider(s) and the assigned
+driver, and cascade removal of rides when a rider or a driver is removed. Every search
+operation in this class returns the matching data (a single object, or a LinkedList of
+matches) rather than printing it, so each method can be tested directly against its return
+value.
  */
 public interface IRideSharingSystem {
 	// Loads riders from a CSV file.

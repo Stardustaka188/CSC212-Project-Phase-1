@@ -1,6 +1,10 @@
 /**
  * Represents a single rider in the ride-sharing system.
  * Riders are compared by ID.
+ * Rider: This class extends Person and represents a single rider in the Ride-Sharing System.
+In addition to the inherited Person fields, it should have fields for the rider’s email address
+and home city. The rider ID is unique and must be provided when the rider is created
+via the constructor. It must not be modified after creation.
  */
 public interface IRider extends IPerson, Comparable<IRider> {
 

@@ -1,6 +1,12 @@
+import java.util.LinkedList;
+
 /**
  * Common fields and behavior shared by every person in the ride-sharing
  * system (riders and drivers). IRider and IDriver both extend this interface.
+ * Person: Rider and Driver share a set of common fields and methods (name, phone number,
+ride history). These are factored out into a shared, abstract Person class that both Rider
+and Driver extend, so this common behavior only needs to be written once. Person is
+an abstract concept and must not be instantiated directly
  */
 public interface IPerson {
 

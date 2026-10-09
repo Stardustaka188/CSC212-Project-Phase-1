@@ -1,5 +1,12 @@
+import java.util.LinkedList;
+
 /**
  * Stores all drivers in a structure maintained in sorted order by driver ID.
+ * DriverList: This class will represent the linked list data structure used for storing drivers’
+records. It should have methods for adding, searching, and removing driver records from
+the list. Driver ID and vehicle plate are unique, so removing by either one removes at
+most one driver. Name and vehicle type are not unique: removing by name or by vehicle
+type must remove every driver that matches, not just the first one found.
  */
 public interface IDriverList {
 
