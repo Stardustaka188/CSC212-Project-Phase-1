@@ -5,6 +5,10 @@
 public class Main {
     public static void main(String[] args) {
         // TODO: load riders, drivers and rides, then present the required menu.
+        RideSharingSystem l1 = new RideSharingSystem();
+        l1.loadRidersFromCSV("riders_100.csv");
+        l1.loadDriversFromCSV("drivers_30.csv");
+        l1.loadRidesFromCSV("rides_40.csv");
         System.out.println("1. List all riders");
         System.out.println("2. Search for riders by home city.");
         System.out.println("3. Search for riders by name.");
