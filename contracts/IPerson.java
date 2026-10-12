@@ -1,4 +1,4 @@
-import java.util.LinkedList;
+
 
 /**
  * Common fields and behavior shared by every person in the ride-sharing

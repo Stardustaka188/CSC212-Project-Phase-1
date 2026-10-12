@@ -61,10 +61,11 @@ public class LinkedList<T> implements List<T>
                     tmp = tmp.next;
                 }
             tmp.next = current.next;
+            }
             if(current.next == null)
                 current = head;
+            else
             current = current.next;
-            }
         }
 
         public boolean full(){
