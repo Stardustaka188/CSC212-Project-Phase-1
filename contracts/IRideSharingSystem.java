@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 
 /**
  * The interface of the Ride-Sharing System.
