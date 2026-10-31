@@ -73,6 +73,7 @@ public class Main {
         }
     }
 
+    // prints menu options
     private static void printMenu(){
         System.out.println();
         System.out.println("1. List all riders");
@@ -203,6 +204,7 @@ public class Main {
             System.out.println("Failed to schedule the ride.");
         }
     }
+    // reads a date and time in the format MM/DD/YYYY
     private static IDateTime readDateTime(String prompt) throws IOException {
         while (true) {
             String text = readLine(prompt);
@@ -236,5 +238,6 @@ public class Main {
             }
         }
     }
+
 
 }
