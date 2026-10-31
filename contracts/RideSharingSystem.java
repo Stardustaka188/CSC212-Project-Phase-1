@@ -265,8 +265,7 @@ public class RideSharingSystem implements IRideSharingSystem {
             while ((line = br.readLine()) != null) {
                 String[] v = line.split(",");
                 try {
-                    VehicleType type = VehicleType.valueOf(
-                            v[4].trim().toUpperCase().replace(' ', '_'));
+                    VehicleType type = VehicleType.valueOf(v[4].trim());
                     IDriver driver = new Driver(Integer.parseInt(v[0].trim()), v[1].trim(),
                             v[2].trim(), v[3].trim(), type);
                     addDriver(driver);
