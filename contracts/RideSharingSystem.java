@@ -7,63 +7,70 @@ public class RideSharingSystem implements IRideSharingSystem {
     private IDriverList driverList;
     private IRideList rideList;
 
+    // constructor 
     public RideSharingSystem() {
         riderList = new RiderList();
         driverList = new DriverList();
         rideList = new RideList();
     }
 
+    // adds a driver
     public boolean addDriver(IDriver driver) {
-        if (driver == null) {
-            return false;
-        }
-        if (driverList.findById(driver.getId()) != null) {
-            return false;
-        }
-        if (driverList.findByVehiclePlate(driver.getVehiclePlate()) != null) {
-            return false;
-        }
+        if (driver == null) return false;
+        if (driverList.findById(driver.getId()) != null) return false;
+        
+        if (driverList.findByVehiclePlate(driver.getVehiclePlate()) != null) return false;
 
         return driverList.add(driver);
     }
 
+    // search rider by id 
     public IRider searchRiderById(int riderId) {
         return riderList.findById(riderId);
 
     }
 
+    // search by email
     public IRider searchRiderByEmail(String email) {
         return riderList.findByEmail(email);
     }
 
+    // search by name
     public LinkedList<IRider> searchRidersByName(String fullName) {
         return riderList.findByName(fullName);
     }
 
+    // search all riders with the same city
     public LinkedList<IRider> searchRidersByHomeCity(String homeCity) {
         return riderList.findByHomeCity(homeCity);
     }
 
+    // returns a list of all riders
     public LinkedList<IRider> getAllRiders() {
         return riderList.getAll();
     }
 
+    // search driver by id 
     public IDriver searchDriverById(int driverId) {
         return driverList.findById(driverId);
     }
 
+    // search driver by plate number
     public IDriver searchDriverByVehiclePlate(String vehiclePlate) {
         return driverList.findByVehiclePlate(vehiclePlate);
     }
 
+    //search all drivers with this vehicle type
     public LinkedList<IDriver> searchDriversByVehicleType(VehicleType vehicleType) {
         return driverList.findByVehicleType(vehicleType);
     }
 
+    // return a list of all drivers
     public LinkedList<IDriver> getAllDrivers() {
         return driverList.getAll();
     }
 
+    //removes a rider and his private rides
     public boolean removeRider(int riderId) {
         IRider rider = riderList.findById(riderId);
         if (rider == null) {
@@ -95,6 +102,7 @@ public class RideSharingSystem implements IRideSharingSystem {
 
     }
 
+    //helper method for removeRider
     private void removeFromHistory(LinkedList<IRide> history, int rideId) {
         if (history.empty()) {
             return;
@@ -112,6 +120,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         }
     }
 
+    //helper method for removeDriver
     private void removeFromRidersHistories(IRide ride) {
         if (ride instanceof ISharedRide) {
             LinkedList<IRider> participants = ((ISharedRide) ride).getParticipants();
@@ -131,6 +140,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         }
     }
 
+    // schedule a private ride
     public boolean schedulePrivateRide(String pickupLocation, IDateTime pickupTime,
             IDateTime dropoffTime, String dropoffLocation, int riderId, int driverId) {
         if (pickupTime == null || dropoffTime == null) {
@@ -149,8 +159,13 @@ public class RideSharingSystem implements IRideSharingSystem {
             return false;
         }
 
-        IPrivateRide ride = new PrivateRide(pickupLocation, pickupTime, dropoffTime,
-                dropoffLocation, driver, rider);
+        IPrivateRide ride;
+        try {
+            ride = new PrivateRide(pickupLocation, pickupTime, dropoffTime,
+                    dropoffLocation, driver, rider);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
         if (!rideList.addRide(ride)) {
             return false;
         }
@@ -160,6 +175,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         return true;
     }
 
+    // schedule a shared ride
     public boolean scheduleSharedRide(String pickupLocation, IDateTime pickupTime,
             IDateTime dropoffTime, String dropoffLocation, int[] riderIds, int driverId) {
         if (pickupTime == null || dropoffTime == null) {
@@ -181,8 +197,13 @@ public class RideSharingSystem implements IRideSharingSystem {
             }
         }
 
-        ISharedRide ride = new SharedRide(pickupLocation, pickupTime, dropoffTime,
-                dropoffLocation, driver);
+        ISharedRide ride;
+        try {
+            ride = new SharedRide(pickupLocation, pickupTime, dropoffTime,
+                    dropoffLocation, driver);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
         for (int i = 0; i < riderIds.length; i++) {
             IRider rider = riderList.findById(riderIds[i]);
             if (ride.addParticipant(rider)) {
@@ -197,14 +218,17 @@ public class RideSharingSystem implements IRideSharingSystem {
         return true;
     }
 
+    // search rides by pickup location
     public LinkedList<IRide> searchRidesByPickupLocation(String pickupLocation) {
         return rideList.findByPickupLocation(pickupLocation);
     }
 
+    //search rides by rider name
     public LinkedList<IRide> searchRidesByRiderName(String riderName) {
         return rideList.findByRiderName(riderName);
     }
 
+    //return a list of all riders that have the same pickup location
     public LinkedList<IRider> getSharedRideParticipants(String pickupLocation) {
         LinkedList<IRider> result = new LinkedList<IRider>();
         LinkedList<IRide> rides = rideList.findByPickupLocation(pickupLocation);
@@ -236,10 +260,12 @@ public class RideSharingSystem implements IRideSharingSystem {
         return result;
     }
 
+    //return a list of all rides alpabetically
     public LinkedList<IRide> getAllRidesAlphabetically() {
         return rideList.getAllAlphabetically();
     }
 
+    //loading riders from csv
     public boolean loadRidersFromCSV(String ridersFilePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(ridersFilePath))) {
             String line;
@@ -259,6 +285,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         }
     }
 
+    //loading drivers from csv
     public boolean loadDriversFromCSV(String driversFilePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(driversFilePath))) {
             String line;
@@ -272,6 +299,7 @@ public class RideSharingSystem implements IRideSharingSystem {
                 } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                     continue;
                 }
+
             }
             return true;
         } catch (IOException e) {
@@ -279,6 +307,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         }
     }
 
+    //loading rides from csv
     public boolean loadRidesFromCSV(String ridesFilePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(ridesFilePath))) {
             String line;
@@ -313,6 +342,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         }
     }
 
+    // adds a rider 
     public boolean addRider(IRider rider) {
         if (rider == null) {
             return false;
@@ -323,6 +353,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         return riderList.add(rider);
     }
 
+    // removes a driver with all his history
     public boolean removeDriver(int driverId) {
         IDriver driver = driverList.findById(driverId);
         if (driver == null) {
@@ -345,6 +376,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         return driverList.removeById(driverId);
     }
 
+    // converts string into datetime object
     private IDateTime parseDateTime(String text) {
         String[] parts = text.trim().split(" ");
         String[] date = parts[0].split("/");
@@ -354,6 +386,7 @@ public class RideSharingSystem implements IRideSharingSystem {
                 Integer.parseInt(time[1]));
     }
 
+    // checks if there a conflict in in date or time
     private boolean hasConflict(IPerson person, IDateTime start, IDateTime end) {
         LinkedList<IRide> history = person.getRideHistory();
         if (history.empty()) {
@@ -375,6 +408,7 @@ public class RideSharingSystem implements IRideSharingSystem {
         return false;
     }
 
+    // adds a ride to a person's history
     private void addToHistory(LinkedList<IRide> history, IRide ride) {
         if (!history.empty()) {
             history.findFirst();
