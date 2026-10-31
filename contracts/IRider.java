@@ -29,3 +29,4 @@ public interface IRider extends IPerson, Comparable<IRider> {
     @Override
     int compareTo(IRider other);
 }
+

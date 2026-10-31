@@ -1,58 +1,51 @@
 public abstract class Person implements IPerson {
     private final int id;
     private String name;
-    private String PhoneNumber;
-    private LinkedList<IRide> Rides;
+    private String phoneNumber;
+    private final LinkedList<IRide> rideHistory;
 
-    public Person(int id, String name, String phoneNumber){
+    public Person(int id, String name, String phoneNumber) {
         this.id = id;
         this.name = name;
         setPhoneNumber(phoneNumber);
-        Rides = new LinkedList<IRide>();
+        this.rideHistory = new LinkedList<>();
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
 
+    @Override
+    public String getName() {
+        return name;
+    }
 
-public int getId(){
-    return id;
-}
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public String getName(){
-    return name;
-}
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-public void setName(String name){
-    this.name = name;
-}
-
-public String getPhoneNumber(){
-    return PhoneNumber;
-}
-
-public void setPhoneNumber(String phonenumber)throws IllegalArgumentException{
-    IllegalArgumentException e = new IllegalArgumentException();
-    if(phonenumber.length() == 10){
-        char c[] = phonenumber.toCharArray();
-        for(int i =0; i < phonenumber.length(); i++){
-            if(!Character.isDigit(c[i])){
-        throw e;
-            }
+    @Override
+    public void setPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || !phoneNumber.matches("\\d{10}")) {
+            throw new IllegalArgumentException("Phone number must contain exactly 10 digits.");
         }
-        this.PhoneNumber = phonenumber;
-        }
-        else
-            throw e;
-        return;
-} 
+        this.phoneNumber = phoneNumber;
+    }
 
-public LinkedList<IRide> getRideHistory()
-{
-    return Rides;
+    @Override
+    public LinkedList<IRide> getRideHistory() {
+        return rideHistory;
+    }
 
-}
-@Override
-public String toString()
-{
-   return "Person {id=" + id + ", name='" + name + "', phoneNumber='" + PhoneNumber + "'}";
-}
+    @Override
+    public String toString() {
+        return "Person{id=" + id + ", name='" + name + "', phoneNumber='" + phoneNumber + "'}";
+    }
 }

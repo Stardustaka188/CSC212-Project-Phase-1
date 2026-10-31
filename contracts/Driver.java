@@ -1,33 +1,39 @@
-public class Driver extends Person implements IDriver {
-    private  String vehiclePlate;
+public class Driver extends Person implements IDriver, Comparable<IDriver> {
+    private String vehiclePlate;
     private VehicleType vehicleType;
-    
-    public Driver(int id, String name, String phoneNumber, String vehiclePlate, VehicleType vehicleType){
-        super(id,name,phoneNumber);
+
+    public Driver(int id, String name, String phoneNumber, String vehiclePlate, VehicleType vehicleType) {
+        super(id, name, phoneNumber);
         setVehiclePlate(vehiclePlate);
         this.vehicleType = vehicleType;
     }
-    public String getVehiclePlate(){return vehiclePlate;}
-    public VehicleType getVehicleType(){return vehicleType;}
-    public void setVehicleType(VehicleType vehicleType){this.vehicleType = vehicleType;}
-    public void setVehiclePlate(String vehiclePlate){
-        if (vehiclePlate == null || vehiclePlate.length() != 7) {
-       throw new IllegalArgumentException("Invalid vehicle plate");
-        }
-       for(int i =0; i < 3; i++){
-        if(vehiclePlate.charAt(i) < 'A' || vehiclePlate.charAt(i) > 'Z'){throw new IllegalArgumentException("Invalid vehicle plate");}
-       }
-        for(int i =3; i < 7; i++){
-        if(vehiclePlate.charAt(i) < '0'|| vehiclePlate.charAt(i) > '9' ){throw new IllegalArgumentException("Invalid vehicle plate");}
-       }
-       this.vehiclePlate = vehiclePlate;
-   }
-   public int compareTo(IDriver other) {
-       if (this.getId() < other.getId()) {
-           return -1;
-       } else if (this.getId() > other.getId()) {
-           return 1;
-       }
-       return 0;
-   }
+
+    @Override
+    public String getVehiclePlate() {
+        return vehiclePlate;
     }
+
+    @Override
+    public void setVehiclePlate(String vehiclePlate) {
+        if (vehiclePlate == null || !vehiclePlate.matches("[A-Z]{3}\\d{4}")) {
+            throw new IllegalArgumentException("Vehicle plate must be 3 uppercase letters followed by 4 digits (e.g. ABC1234).");
+        }
+        this.vehiclePlate = vehiclePlate;
+    }
+
+    @Override
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    @Override
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    @Override
+    public int compareTo(IDriver other) {
+        if (other == null) return 1;
+        return Integer.compare(this.getId(), other.getId());
+    }
+}
