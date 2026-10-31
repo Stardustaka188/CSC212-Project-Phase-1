@@ -33,4 +33,10 @@ public class Rider extends Person implements IRider, Comparable<IRider> {
         if (other == null) return 1;
         return Integer.compare(this.getId(), other.getId());
     }
+
+    @Override
+    public String toString() {
+        return "Rider{id=" + getId() + ", name='" + getName() + "', phoneNumber='" + getPhoneNumber()
+                + "', email='" + email + "', homeCity='" + homeCity + "'}";
+    }
 }

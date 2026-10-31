@@ -36,4 +36,10 @@ public class Driver extends Person implements IDriver, Comparable<IDriver> {
         if (other == null) return 1;
         return Integer.compare(this.getId(), other.getId());
     }
+
+    @Override
+    public String toString() {
+        return "Driver{id=" + getId() + ", name='" + getName() + "', phoneNumber='" + getPhoneNumber()
+                + "', vehiclePlate='" + vehiclePlate + "', vehicleType=" + vehicleType + "}";
+    }
 }
